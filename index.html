@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Secure Tech Reports | Privacy-First Devices (MARK37)</title>
+  <meta name="description" content="Independent privacy-first device guide: Ghost Phone, Ghost Laptop, and Ghost Tablet. Compare options and choose the right secure device for your workflow." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1722;
+      --panel2:#101b2a;
+      --text:#e9eef6;
+      --muted:#b8c2d3;
+      --line:rgba(255,255,255,.10);
+      --accent:#7cf0c7;
+      --accent2:#7aa8ff;
+      --warn:#ffcc66;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --max:1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background:
+        radial-gradient(900px 420px at 15% 10%, rgba(122,168,255,.18), transparent 60%),
+        radial-gradient(700px 360px at 85% 5%, rgba(124,240,199,.12), transparent 55%),
+        linear-gradient(180deg, #070a0f, var(--bg));
+      color:var(--text);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px 18px 70px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:10px 0 22px; position:sticky; top:0;
+      background: linear-gradient(180deg, rgba(11,15,20,.92), rgba(11,15,20,.55), transparent);
+      backdrop-filter: blur(10px);
+      z-index:10;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(124,240,199,.95), rgba(122,168,255,.95));
+      box-shadow: 0 10px 30px rgba(122,168,255,.12);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:""; position:absolute; inset:-30%;
+      background: radial-gradient(circle at 30% 35%, rgba(255,255,255,.55), transparent 55%);
+      transform: rotate(25deg);
+    }
+    .brand strong{letter-spacing:.2px}
+    .nav{
+      display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .chip{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:13px;
+      text-decoration:none;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(124,240,199,.35);
+      background: linear-gradient(135deg, rgba(124,240,199,.16), rgba(122,168,255,.10));
+      text-decoration:none;
+      font-weight:650;
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+      transition: transform .15s ease, filter .15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); filter:brightness(1.05)}
+    .btn.secondary{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-weight:600;
+      box-shadow:none;
+    }
+    .hero{
+      margin-top:8px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:var(--radius);
+      padding:26px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:""; position:absolute; inset:-40%;
+      background: radial-gradient(circle at 30% 20%, rgba(124,240,199,.12), transparent 55%),
+                  radial-gradient(circle at 70% 40%, rgba(122,168,255,.12), transparent 55%);
+      transform: rotate(-8deg);
+      pointer-events:none;
+    }
+    .hero-grid{
+      display:grid; grid-template-columns: 1.25fr .85fr; gap:22px;
+      position:relative;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 4.2vw, 44px);
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size: clamp(15px, 1.6vw, 17px);
+      line-height:1.55;
+      max-width:60ch;
+    }
+    .kpis{
+      display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 0;
+    }
+    .kpi{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius:999px;
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .kpi b{color:var(--text)}
+    .card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16,27,42,.85), rgba(16,27,42,.45));
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    .mini-title{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.14em; margin:0 0 8px}
+    .trust{
+      display:grid; gap:10px;
+    }
+    .trust .row{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 12px; border:1px solid var(--line);
+      border-radius:14px; background: rgba(255,255,255,.03);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      margin-top:4px;
+      flex:0 0 auto;
+    }
+    .row p{margin:0; color:var(--muted); font-size:13px; line-height:1.5}
+    .section{
+      margin-top:22px;
+      padding-top:8px;
+    }
+    .section h2{
+      margin:0 0 12px;
+      font-size: clamp(20px, 2.4vw, 28px);
+      letter-spacing:-.35px;
+    }
+    .grid3{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
+    }
+    .product{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:var(--radius);
+      padding:18px;
+      min-height: 255px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(124,240,199,.25);
+      background: rgba(124,240,199,.08);
+      color: var(--text);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      width:max-content;
+    }
+    .product h3{margin:12px 0 6px; font-size:18px}
+    .product p{margin:0 0 12px; color:var(--muted); line-height:1.55}
+    .product ul{margin:0; padding-left:18px; color:var(--muted); font-size:13px; line-height:1.55}
+    .product .actions{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap}
+    .table{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background: rgba(255,255,255,.03);
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width: 760px;
+    }
+    th,td{
+      padding:12px 12px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:13px;
+      color:var(--muted);
+      vertical-align:top;
+    }
+    th{color:var(--text); font-weight:700; background: rgba(255,255,255,.03)}
+    td b{color:var(--text)}
+    .note{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+    .quote-grid{
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px;
+    }
+    .quote{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    .quote p{margin:0; color:var(--muted); line-height:1.6}
+    .quote .who{margin-top:10px; color:var(--text); font-weight:700; font-size:13px}
+    .faq{
+      display:grid; gap:10px;
+    }
+    details{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      color:var(--text);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{color:var(--muted); margin:10px 0 0; line-height:1.6}
+    .cta{
+      margin-top:22px;
+      border:1px solid rgba(124,240,199,.24);
+      background: linear-gradient(135deg, rgba(124,240,199,.12), rgba(122,168,255,.10));
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .cta h3{margin:0 0 6px; font-size:18px}
+    .cta p{margin:0; color:var(--muted); line-height:1.5}
+    footer{
+      margin-top:26px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+      opacity:.95;
+    }
+    .divider{height:1px; background: var(--line); margin:14px 0}
+    .pill{
+      display:inline-block;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-size:12px;
+      color:var(--muted);
+      margin-right:8px;
+      margin-top:8px;
+    }
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns: 1fr; }
+      .grid3{grid-template-columns: 1fr; }
+      .quote-grid{grid-template-columns: 1fr; }
+      .topbar{position:static; backdrop-filter:none; background:transparent}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Top Bar -->
+    <div class="topbar">
+      <a class="brand" href="#">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>Secure Tech Reports</strong><br/>
+          <span style="font-size:12px;color:var(--muted)">Independent privacy-first device guide</span>
+        </div>
+      </a>
+      <div class="nav">
+        <a class="chip" href="#devices">Devices</a>
+        <a class="chip" href="#compare">Compare</a>
+        <a class="chip" href="#faq">FAQ</a>
+        <a class="btn" href="#get-started">See MARK37 Options →</a>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero-grid">
+        <div>
+          <h1>Privacy-first devices that put <span style="color:var(--accent)">you</span> in control.</h1>
+          <p class="sub">
+            MARK37’s “Ghost” lineup focuses on practical privacy: reduce tracking, cut unwanted data collection, and run a device you actually control.
+            This page is a streamlined guide to help you pick the right Ghost device for your workflow.
+          </p>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <a class="btn" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">Shop Ghost Devices →</a>
+            <a class="btn secondary" href="#compare">Compare models</a>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><b>Best for:</b> creators • remote work • professionals</div>
+            <div class="kpi"><b>Goal:</b> less tracking, more control</div>
+            <div class="kpi"><b>Approach:</b> privacy-first defaults</div>
+          </div>
+        </div>
+
+        <aside class="card">
+          <p class="mini-title">What you’ll get here</p>
+          <div class="trust">
+            <div class="row">
+              <span class="dot"></span>
+              <p><b>Clear recommendations</b><br/>Choose a Ghost Phone, Laptop, or Tablet based on how you work.</p>
+            </div>
+            <div class="row">
+              <span class="dot"></span>
+              <p><b>Practical privacy</b><br/>Focus on everyday security habits—not unrealistic promises.</p>
+            </div>
+            <div class="row">
+              <span class="dot"></span>
+              <p><b>Fast next step</b><br/>One click to view current options on MARK37.</p>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="pill">No hype</div>
+          <div class="pill">Professional tone</div>
+          <div class="pill">Affiliate disclosure</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Devices -->
+    <section class="section" id="devices">
+      <h2>Choose your Ghost device</h2>
+
+      <div class="grid3">
+        <!-- Ghost Phone -->
+        <div class="product">
+          <div>
+            <span class="badge">Ghost Phone</span>
+            <h3>Privacy-focused smartphone</h3>
+            <p>
+              Best for daily communication with fewer default data leaks. Great for anyone who wants a more private mobile experience
+              without turning their life upside down.
+            </p>
+            <ul>
+              <li>Reduce tracking and unwanted data collection</li>
+              <li>Better control over apps and permissions</li>
+              <li>Ideal for creators, business, and travel</li>
+            </ul>
+          </div>
+          <div class="actions">
+            <a class="btn" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">View Ghost Phones →</a>
+            <a class="btn secondary" href="#faq">Common questions</a>
+          </div>
+        </div>
+
+        <!-- Ghost Laptop -->
+        <div class="product">
+          <div>
+            <span class="badge">Ghost Laptop</span>
+            <h3>Simple-to-use Linux laptop</h3>
+            <p>
+              Best for productivity with privacy-first defaults. If you want a work device that doesn’t live inside a
+              Big Tech ecosystem, start here.
+            </p>
+            <ul>
+              <li>Privacy-first operating environment</li>
+              <li>Great for work, writing, admin, and research</li>
+              <li>Optionally keep a “legacy” device offline for old peripherals</li>
+            </ul>
+          </div>
+          <div class="actions">
+            <a class="btn" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">View Ghost Laptops →</a>
+            <a class="btn secondary" href="#compare">Compare</a>
+          </div>
+        </div>
+
+        <!-- Ghost Tablet -->
+        <div class="product">
+          <div>
+            <span class="badge">Ghost Tablet</span>
+            <h3>Powerful, family-friendly tablet</h3>
+            <p>
+              Best for reading, streaming, learning, and everyday use—especially when you don’t want a tablet controlled by
+              Apple/Google ecosystems.
+            </p>
+            <ul>
+              <li>Good for kids and shared family devices</li>
+              <li>Helpful for travel, media, and light work</li>
+              <li>More control over accounts + app choices</li>
+            </ul>
+          </div>
+          <div class="actions">
+            <a class="btn" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">View Ghost Tablets →</a>
+            <a class="btn secondary" href="#get-started">Get started</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="note">
+        Tip: If you’re unsure, start with the device you use the most every day (phone for many people). Then expand your “privacy stack” over time.
+      </p>
+    </section>
+
+    <!-- Compare -->
+    <section class="section" id="compare">
+      <h2>Quick comparison</h2>
+      <div class="table" role="region" aria-label="Device comparison table" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th>Device</th>
+              <th>Best for</th>
+              <th>Why it’s a win</th>
+              <th>Considerations</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Ghost Phone</b></td>
+              <td>Daily calls/texts + mobile apps</td>
+              <td>More control over tracking + permissions</td>
+              <td>App habits matter (what you install + permissions)</td>
+              <td><a class="btn secondary" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">Shop →</a></td>
+            </tr>
+            <tr>
+              <td><b>Ghost Laptop</b></td>
+              <td>Work + research + productivity</td>
+              <td>Privacy-first environment with strong usability</td>
+              <td>Some peripherals may need workarounds</td>
+              <td><a class="btn secondary" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">Shop →</a></td>
+            </tr>
+            <tr>
+              <td><b>Ghost Tablet</b></td>
+              <td>Learning + family + travel</td>
+              <td>More device control outside Big Tech defaults</td>
+              <td>Choose apps carefully for best privacy</td>
+              <td><a class="btn secondary" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">Shop →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="note">
+        Want a deeper breakdown? Add your own “Top Pick” notes per category and link to full review articles on your site
+        (example: <code>/ghost-laptop-review</code>).
+      </p>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="section" id="proof">
+      <h2>What people usually notice first</h2>
+      <div class="quote-grid">
+        <div class="quote">
+          <p>
+            “The biggest shift isn’t just the device — it’s realizing how many apps expect your data by default.
+            A privacy-first setup forces better habits.”
+          </p>
+          <div class="who">— Common customer theme</div>
+        </div>
+        <div class="quote">
+          <p>
+            “Switching platforms can mean small workflow changes. The benefit is you stop feeding the
+            always-on tracking ecosystem.”
+          </p>
+          <div class="who">— Common customer theme</div>
+        </div>
+      </div>
+      <p class="note">
+        You can replace these with real quotes once you collect them (or add screenshots/testimonials if you have permission).
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2>FAQ (fast answers)</h2>
+      <div class="faq">
+        <details>
+          <summary>Is this “going ghost” / total anonymity?</summary>
+          <p>
+            No device can guarantee total anonymity. The goal here is practical privacy: reduce tracking, minimize data collection,
+            and control what runs on your device.
+          </p>
+        </details>
+        <details>
+          <summary>Do I need to be technical to use these?</summary>
+          <p>
+            You don’t need to be an engineer. Like any platform shift, there’s a learning curve — but most people adapt quickly with
+            basic guidance and good habits.
+          </p>
+        </details>
+        <details>
+          <summary>Will all my accessories and apps work?</summary>
+          <p>
+            Many will. Some specialized peripherals (especially older vendor-locked hardware) may require workarounds. If you rely on
+            a specific tool, confirm compatibility first.
+          </p>
+        </details>
+        <details>
+          <summary>What’s the best starting device?</summary>
+          <p>
+            Start with the device you use most: for many, that’s the phone. If your work life is laptop-heavy, the Ghost Laptop is a
+            strong first move.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="get-started">
+      <div>
+        <h3>Ready to view current MARK37 Ghost device options?</h3>
+        <p>Click through to explore available models and choose the best fit for your privacy + workflow.</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <a class="btn" href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener">Shop on MARK37 →</a>
+        <a class="btn secondary" href="#top">Back to top</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="divider"></div>
+      <b>Affiliate Disclosure:</b> Secure Tech Reports may earn a commission if you purchase through links on this page.
+      This does not affect the price you pay and helps support our independent reviews.
+      <br/><br/>
+      <b>Disclaimer:</b> This page is an independent guide and is not the official MARK37 website. Product names and trademarks belong to their respective owners.
+    </footer>
+  </div>
+</body>
+</html>
